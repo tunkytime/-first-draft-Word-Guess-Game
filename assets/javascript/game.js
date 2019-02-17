@@ -1,36 +1,52 @@
-// VARIABLES
+// array of random words
 var words = ["word1", "word12", "word123", "word1234", "word12345"];
-var words = words[Math.floor(Math.random() * words.length)];
 
-var answers = [];
-for (var i = 0; i < words.length; i++) {
-    answers[i] = "___";
+// choose a random word
+var word = words[Math.floor(Math.random() * words.length)];
+
+// empty array to store answer
+var answer = [];
+for (var i = 0; i < word.length; i++) {
+    answer[i] = "_";
 }
 
-var remainingLetters = words.length;
+// empty array to store letter guesses
+var incorrectGuesses = [];
 
-// EVENT LISTENER
+
+var remainingLetters = word.length;
+
+// start game
+// get the player's guess
 
 document.onkeyup = function (event) {
-    var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    console.log(userGuess);
+    var guess = String.fromCharCode(event.keyCode).toLowerCase();
+    console.log(guess);
+    console.log(incorrectGuesses);
+    console.log(word);
+    console.log(answer);
 
-    // CHOOSE RANDOM WORD FROM ARRAY
-
-    var randomWord = words[Math.floor(Math.random() * words.length)];
-    console.log(randomWord);
-    console.log(answers);
-
-    // IF userGuess IS SOMEWHERE IN THE WORD
-
-    // DISPLAY WORD ON SCREEN
+    if (word.indexOf(guess) === -1) {
+        incorrectGuesses.push(" " + guess);
+    } else {
+        // update the game stats
+        for (var j = 0; j < word.length; j++) {
+            if (word[j] === guess) {
+                answer[j] = guess;
+                remainingLetters--;
+            }
+        }
+    }
+    // display word in HTML
 
     var displayWord =
-        "<p>" + answers.join(" ") + "</p>";
+        "<p>" + answer.join(" ") + "</p>" +
+        "<p>Incorrect Guesses: " + incorrectGuesses + "</p>";
 
     document.querySelector("#display-word").innerHTML = displayWord;
-
 }
+// end of game
+
 
 /* Display the following on the page: */
 
