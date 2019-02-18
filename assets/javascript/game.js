@@ -9,18 +9,23 @@ var currentWord;
 
 // array of words
 var words = [
-"PLANET",
+"COMET",
+"EARTH",
 "GALAXY",
 "INTERSTELLAR",
-"COMET",
+"MOON",
+"NEBULA",
+"NOVA",
+"SUPERNOVA",
+"TERRESTIAL",
 "UNIVERSE"
 ];
 
 // messages to display
   messages = {
     start: "Press any key to get started!",
-    win: "You win!",
-    lose: "Game Over!",
+    win: "Correct!",
+    lose: "You ran out of guesses!",
     wrong: "Guess again",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
@@ -52,7 +57,8 @@ var displayNumberOfGuesses = numberOfGuesses;
 		
 		// choose random word
 		currentWord = words[Math.floor(Math.random() * words.length)];
-		
+		updateImg()
+
 		// create the answer array
 		for (var i = 0; i < currentWord.length; i++) {
 		answer[i] = "_";
@@ -66,6 +72,7 @@ var displayNumberOfGuesses = numberOfGuesses;
 
 // run newWord() on load to start game
 window.onload = newWord();
+window.onload = updateImg();
 
 function gameRound() {
 	// get user guess
@@ -137,7 +144,7 @@ function endGame(won) {
 			
 		} else {
 			// correctly guessed currentWord
-			message.innerHTML = messages.win;
+			message.innerHTML = messages.win + " The word was " + currentWord + ".";
 			// randomly choose new word
 			newWord();
 		}
@@ -147,4 +154,41 @@ function endGame(won) {
 			// randomly choose new word
 			newWord();
 		}
+};
+
+function updateImg () {
+	showImg = currentWord;
+	
+	switch (showImg) {
+		case "COMET":
+			spaceImg.src = "assets/images/comet.jpg";
+			break;
+		case "EARTH":
+			spaceImg.src = "assets/images/earth.jpg";
+			break;
+		case "GALAXY":
+			spaceImg.src = "assets/images/galaxy.jpg";
+			break;
+		case "INTERSTELLAR":
+			spaceImg.src = "assets/images/interstellar.jpeg";
+			break;
+		case "MOON":
+			spaceImg.src = "assets/images/moon.jpeg";
+			break;
+		case "NEBULA":
+			spaceImg.src = "assets/images/nebula.jpg";
+			break;
+		case "NOVA":
+			spaceImg.src = "assets/images/nova.jpg";
+			break;
+		case "SUPERNOVA":
+			spaceImg.src = "assets/images/supernova.jpg";
+			break;
+		case "TERRESTIAL":
+			spaceImg.src = "assets/images/terrestial.jpeg";
+			break;
+		case "UNIVERSE":
+			spaceImg.src = "assets/images/universe.jpg";
+			break;
+	}
 };
