@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Word Guess Game</title>
-  </head>
 
-  <body>
-    <p id="display-word">Press any key to get started!</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Word Guess Game</title>
+</head>
 
-    <script type="text/javascript" src="assets/javascript/game.js"></script>
-  </body>
+<body>
+  <p>Press any key to get started!</p>
+  <div id="html">
+    <p>Wins</p>
+    <p>0</p>
+    <p>Current Word</p>
+    <p id="answer"></p>
+    <p>Letters Already Guessed</p>
+    <p>Number of Guesses Remaining: <span id="guessesLeft"></span></p>
+  </div>
+
+
+
+  <script type="text/javascript" src="assets/javascript/game.js"></script>
+</body>
+
 </html>
