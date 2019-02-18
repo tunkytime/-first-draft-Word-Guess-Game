@@ -26,7 +26,7 @@ var words = [
     start: "Press any key to get started!",
     win: "Correct!",
     lose: "You ran out of guesses!",
-    wrong: "Guess again",
+    wrong: "Guess again!",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
     ultimateWinner: "Congratulations! You've guessed all the words!"
