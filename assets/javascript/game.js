@@ -17,19 +17,19 @@ var words = [
 "NEBULA",
 "NOVA",
 "SUPERNOVA",
-"TERRESTIAL",
+"EXTRATERRESTIAL",
 "UNIVERSE"
 ];
 
 // messages to display
   messages = {
-    start: "Press any key to get started!",
-    win: "Correct!",
+    start: "Press any key to begin your journey!",
+    win: "Brilliant!",
     lose: "You ran out of guesses!",
     wrong: "Guess again!",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
-    ultimateWinner: "Congratulations! You've guessed all the words!"
+    ultimateWinner: "Congratulations! You've guessed all the mystery words!"
   };
 
 // elements
@@ -111,7 +111,6 @@ function gameRound() {
 					endGame(true);
 				}
 				
-				
 				} else {
 					// guess is not in current word and hasn't been guessed yet
 					lettersGuessed += guess;
@@ -124,6 +123,8 @@ function gameRound() {
 					message.innerHTML = messages.wrong;
 				if (numberOfGuesses === 0) {
 					endGame(false);
+					spaceMove();
+					fadeOut();
 				} else {
 					gameRound();
 					return;
@@ -156,6 +157,56 @@ function endGame(won) {
 		}
 };
 
+// function to move space character
+function spaceMove() {
+  var elem = document.getElementById("spaceman");   
+  var pos = 0;
+  var id = setInterval(frame, 7);
+  function frame() {
+    if (pos == 120) {
+			clearInterval(id);
+		} else {
+			pos++; 
+			elem.style.top = pos + 5 + 'px'; 
+			elem.style.left = pos + 90 + "px"; 
+		}	
+	}
+}
+
+// function to fadeout
+function fadeOut() {
+	var s = document.getElementById("spaceman").style;
+	s.opacity = 1;
+	(function fade(){(s.opacity-=.5)<0?s.display="none":setTimeout(fade,1000)})();
+}
+
+/*
+
+// function to float
+function makeNewPosition(){
+    
+    // Get container dimensions
+    var h = $("#spacemanContainer").height();
+    var w = $("#spacemanContainer").width();
+    
+    var nh = Math.floor(Math.random() * h);
+    var nw = Math.floor(Math.random() * w);
+    
+    return [nh,nw];    
+}
+
+function animateDiv(myclass){
+    var newPosition = makeNewPosition();
+    $(myclass).animate({ top: newPosition[0.75], right: newPosition[1] }, 2000,
+	
+	function()
+		{animateDiv(myclass);        
+    });
+};
+
+*/
+
+// function to update image to match current word
 function updateImg () {
 	showImg = currentWord;
 	
@@ -170,7 +221,7 @@ function updateImg () {
 			spaceImg.src = "assets/images/galaxy.jpg";
 			break;
 		case "INTERSTELLAR":
-			spaceImg.src = "assets/images/interstellar.jpeg";
+			spaceImg.src = "assets/images/interstellar.jpg";
 			break;
 		case "MOON":
 			spaceImg.src = "assets/images/moon.jpeg";
@@ -184,8 +235,8 @@ function updateImg () {
 		case "SUPERNOVA":
 			spaceImg.src = "assets/images/supernova.jpg";
 			break;
-		case "TERRESTIAL":
-			spaceImg.src = "assets/images/terrestial.jpeg";
+		case "EXTRATERRESTIAL":
+			spaceImg.src = "assets/images/extraterrestial.jpg";
 			break;
 		case "UNIVERSE":
 			spaceImg.src = "assets/images/universe.jpg";
