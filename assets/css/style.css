@@ -44,26 +44,31 @@ h4 {
     height: 85px;
     top: 5px;
     left: 90px;
+	/*-webkit-animation:linear infinite alternate;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 10s;*/
 }
 
-/*
-
-#spacemanContainer {
-	height: 100px;
-	width: 250px;
-}
-
-.spacemanFloat {
-	height: 85px;
-	position:fixed;
-	z-index: 100;
-}
-*/
+/*@-webkit-keyframes run {
+    0% { left: 0;}
+    50%{ left : 50%;}
+    100%{ left: 0;}
+}*/
 
 .blackhole {
 	width: 500px;
     position: relative;
     bottom: 100px;
+	-webkit-animation: rotation 50s infinite linear;
+}
+
+@-webkit-keyframes rotation {
+		from {
+				-webkit-transform: rotate(0deg);
+		}
+		to {
+				-webkit-transform: rotate(359deg);
+		}
 }
 
 /* main section */

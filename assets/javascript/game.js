@@ -1,6 +1,7 @@
  
 // global variables
 var wins = 0;
+var pos = 0;
 var answer = [];
 var availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYX";
 var lettersGuessedArr = [];
@@ -25,11 +26,11 @@ var words = [
   messages = {
     start: "Press any key to begin your journey!",
     win: "Brilliant!",
-    lose: "You ran out of guesses!",
-    wrong: "Guess again!",
+    lose: "You fell into a black hole!",
+    wrong: "Keep trying!",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
-    ultimateWinner: "Congratulations! You've guessed all the mystery words!"
+    ultimateWinner: "Congratulations! You've escaped the black hole!"
   };
 
 // elements
@@ -44,10 +45,10 @@ var displayNumberOfGuesses = numberOfGuesses;
 
 //document.querySelector("#numberOfGuesses").innerHTML = displayNumberOfGuesses;
 
-	function newWord() {
+function newWord() {
 		answer = [];
 		lettersGuessedArr = [];
-		numberOfGuesses = 10;
+		numberOfGuesses = 5;
 		lettersGuessed = lettersMatched = "";
 		numLettersMatched = 0;
 		
@@ -107,6 +108,7 @@ function gameRound() {
 					// remove word from array that have been played
 					words.splice(words.indexOf(`${currentWord}`), 1);
 					wins++;
+					playSoundCorrect();
 					numOfWins.innerHTML = wins;
 					endGame(true);
 				}
@@ -122,9 +124,9 @@ function gameRound() {
 					remainingGuesses.innerHTML = numberOfGuesses;
 					message.innerHTML = messages.wrong;
 				if (numberOfGuesses === 0) {
-					endGame(false);
 					spaceMove();
-					fadeOut();
+					playSoundIncorrect();
+					endGame(false);					
 				} else {
 					gameRound();
 					return;
@@ -145,7 +147,7 @@ function endGame(won) {
 			
 		} else {
 			// correctly guessed currentWord
-			message.innerHTML = messages.win + " The word was " + currentWord + ".";
+			message.innerHTML = messages.win + " The mystery was " + currentWord + ".";
 			// randomly choose new word
 			newWord();
 		}
@@ -159,53 +161,31 @@ function endGame(won) {
 
 // function to move space character
 function spaceMove() {
-  var elem = document.getElementById("spaceman");   
-  var pos = 0;
-  var id = setInterval(frame, 7);
-  function frame() {
-    if (pos == 120) {
-			clearInterval(id);
+	var spaceman = document.getElementById("spaceman");
+	var pos = 0;
+	var time = setInterval(frame, 7);
+	function frame() {
+		if (pos == 120) {
+			clearInterval(time);
+			spaceman.style.top = "5px";
+			spaceman.style.left = "90px";
 		} else {
 			pos++; 
-			elem.style.top = pos + 5 + 'px'; 
-			elem.style.left = pos + 90 + "px"; 
-		}	
+			spaceman.style.top = pos + 5 + 'px'; 
+			spaceman.style.left = pos + 90 + "px";
+		}
 	}
 }
 
-// function to fadeout
-function fadeOut() {
-	var s = document.getElementById("spaceman").style;
-	s.opacity = 1;
-	(function fade(){(s.opacity-=.5)<0?s.display="none":setTimeout(fade,1000)})();
-}
-
-/*
-
-// function to float
-function makeNewPosition(){
-    
-    // Get container dimensions
-    var h = $("#spacemanContainer").height();
-    var w = $("#spacemanContainer").width();
-    
-    var nh = Math.floor(Math.random() * h);
-    var nw = Math.floor(Math.random() * w);
-    
-    return [nh,nw];    
-}
-
-function animateDiv(myclass){
-    var newPosition = makeNewPosition();
-    $(myclass).animate({ top: newPosition[0.75], right: newPosition[1] }, 2000,
-	
-	function()
-		{animateDiv(myclass);        
-    });
+// function to play sound
+function playSoundCorrect() {
+	document.getElementById("audioCorrect").play();
 };
 
-*/
-
+function playSoundIncorrect() {
+	document.getElementById("audioIncorrect").play();
+}
+  
 // function to update image to match current word
 function updateImg () {
 	showImg = currentWord;
