@@ -26,11 +26,11 @@ var words = [
   messages = {
     start: "Press any key to begin your journey!",
     win: "Brilliant!",
-    lose: "You fell into a black hole!",
-    wrong: "Keep trying!",
+    lose: "You fell into the black hole!",
+    wrong: "You're getting closer to the black hole...",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
-    ultimateWinner: "Congratulations! You've escaped the black hole!"
+    ultimateWinner: "Whew! You escaped the black hole... for now."
   };
 
 // elements
@@ -48,7 +48,7 @@ var displayNumberOfGuesses = numberOfGuesses;
 function newWord() {
 		answer = [];
 		lettersGuessedArr = [];
-		numberOfGuesses = 5;
+		numberOfGuesses = 25;
 		lettersGuessed = lettersMatched = "";
 		numLettersMatched = 0;
 		
@@ -120,12 +120,13 @@ function gameRound() {
 					console.log("Letters Guessed: " + lettersGuessed);
 					console.log(lettersGuessedArr);		
 					lettersGuessedDisplay.innerHTML = lettersGuessedArr.join(" ");
-					numberOfGuesses--;
+					numberOfGuesses-=5;
 					remainingGuesses.innerHTML = numberOfGuesses;
 					message.innerHTML = messages.wrong;
 				if (numberOfGuesses === 0) {
 					spaceMove();
 					playSoundIncorrect();
+					changeBg();
 					endGame(false);					
 				} else {
 					gameRound();
@@ -153,7 +154,7 @@ function endGame(won) {
 		}
 		
 		} else {
-			message.innerHTML = messages.lose + " The correct answer was " + currentWord + ".";
+			message.innerHTML = messages.lose;
 			// randomly choose new word
 			newWord();
 		}
@@ -163,7 +164,7 @@ function endGame(won) {
 function spaceMove() {
 	var spaceman = document.getElementById("spaceman");
 	var pos = 0;
-	var time = setInterval(frame, 7);
+	var time = setInterval(frame, 4);
 	function frame() {
 		if (pos == 120) {
 			clearInterval(time);
@@ -223,3 +224,21 @@ function updateImg () {
 			break;
 	}
 };
+
+var images = [
+	"assets/images/bg2.jpg",
+	"assets/images/bg3.jpg",
+	"assets/images/bg4.jpg",
+	"assets/images/bg5.jpg",   
+	"assets/images/bg6.jpg",   
+];
+
+var index = 0;
+	
+function changeBg() {
+	index = (index + 1 < images.length) ? index + 1 : 0;
+		$(".background").fadeOut(300, function(){
+		$(this).css("background-image", "url("+ images[index] + ")")
+		$(this).fadeIn(300);
+  });
+}
