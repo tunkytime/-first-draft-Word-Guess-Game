@@ -1,6 +1,6 @@
- 
 // global variables
 var wins = 0;
+var lives = 3;
 var pos = 0;
 var answer = [];
 var availableLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYX";
@@ -14,7 +14,7 @@ var words = [
 "EARTH",
 "GALAXY",
 "INTERSTELLAR",
-"MOON",
+"COSMOS",
 "NEBULA",
 "NOVA",
 "SUPERNOVA",
@@ -30,20 +30,17 @@ var words = [
     wrong: "You're getting closer to the black hole...",
     guessed: "Already guessed, please try again",
     validLetter: "Please enter a letter from A-Z",
-    ultimateWinner: "Whew! You escaped the black hole... for now."
+    ultimateWinner: "Whew! You escaped the black hole... for now.",
+	ultimateLoser: "You fell into the massive black hole and are gone forever."
   };
 
 // elements
 numOfWins = document.getElementById("numWins");
+numOfLives = document.getElementById("numLives");
 currentWordDisplay = document.getElementById("currentWord");
 remainingGuesses = document.getElementById("remainingGuesses");
 lettersGuessedDisplay = document.getElementById("lettersGuessed");
 message = document.getElementById("message");
-	
-// display the number of guesses a user has when the game starts
-var displayNumberOfGuesses = numberOfGuesses;
-
-//document.querySelector("#numberOfGuesses").innerHTML = displayNumberOfGuesses;
 
 function newWord() {
 		answer = [];
@@ -52,7 +49,8 @@ function newWord() {
 		lettersGuessed = lettersMatched = "";
 		numLettersMatched = 0;
 		
-		numOfWins.innterHTMl = wins;
+		numOfWins.innerHTML = wins;
+		numOfLives.innerHTML = lives;
 		remainingGuesses.innerHTML = numberOfGuesses;
 		lettersGuessedDisplay.innerHTML = lettersGuessedArr.join(" ");
 		
@@ -71,7 +69,11 @@ function newWord() {
 		gameRound();
 }; // end newWord function
 
-// run newWord() on load to start game
+// before game starts
+$(window).on("load",function(){
+	$("#myModal").modal("show");
+});
+
 window.onload = newWord();
 window.onload = updateImg();
 
@@ -124,6 +126,7 @@ function gameRound() {
 					remainingGuesses.innerHTML = numberOfGuesses;
 					message.innerHTML = messages.wrong;
 				if (numberOfGuesses === 0) {
+					lives--;
 					spaceMove();
 					playSoundIncorrect();
 					changeBg();
@@ -132,6 +135,10 @@ function gameRound() {
 					gameRound();
 					return;
 				}
+				if (lives === 0) {
+					gameOver();
+				}
+				
 			}
 		} else {
 			message.innerHTML = messages.validLetter;
@@ -139,13 +146,13 @@ function gameRound() {
 	};
 };
 
-// function to start new game 
+// start get new word or end game if won
 function endGame(won) {
 	if (won) {
 		if (words.length === 0) {
 			// all words guessed correctly
 			message.innerHTML = messages.ultimateWinner;
-			
+			youWin();
 		} else {
 			// correctly guessed currentWord
 			message.innerHTML = messages.win + " The mystery was " + currentWord + ".";
@@ -159,6 +166,27 @@ function endGame(won) {
 			newWord();
 		}
 };
+
+// game over
+function gameOver() {
+	document.getElementById("gameplay").style.display = "none";
+	document.getElementById("gameover").style.display = "block";
+	document.getElementById("spaceman-gameover").style.display = "block";
+	playSoundGameOver();
+	setTimeout(playSoundMusic, 3000);
+	// after game ends
+};
+
+function youWin() {
+	document.getElementById("gameplay").style.display = "none";
+	document.getElementById("youwin").style.display = "block";
+	playSoundYell();
+	setTimeout(playSoundWinningMusic, 2000);
+}
+
+function reload() {
+  location.reload();
+}
 
 // function to move space character
 function spaceMove() {
@@ -186,7 +214,23 @@ function playSoundCorrect() {
 function playSoundIncorrect() {
 	document.getElementById("audioIncorrect").play();
 }
-  
+
+function playSoundGameOver() {
+	document.getElementById("voice").play();
+}
+
+function playSoundMusic() {
+	document.getElementById("music").play();
+}
+
+function playSoundWinningMusic() {
+	document.getElementById("winningMusic").play();
+}
+
+function playSoundYell() {
+	document.getElementById("yell").play();
+}
+
 // function to update image to match current word
 function updateImg () {
 	showImg = currentWord;
@@ -204,8 +248,8 @@ function updateImg () {
 		case "INTERSTELLAR":
 			spaceImg.src = "assets/images/interstellar.jpg";
 			break;
-		case "MOON":
-			spaceImg.src = "assets/images/moon.jpeg";
+		case "COSMOS":
+			spaceImg.src = "assets/images/cosmos.jpg";
 			break;
 		case "NEBULA":
 			spaceImg.src = "assets/images/nebula.jpg";
@@ -225,6 +269,7 @@ function updateImg () {
 	}
 };
 
+// function to change background image 
 var images = [
 	"assets/images/bg2.jpg",
 	"assets/images/bg3.jpg",

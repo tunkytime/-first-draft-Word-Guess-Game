@@ -18,6 +18,7 @@ body {
 .background {
 	background-image: url("../images/bg.jpg");
 	background-size: cover;
+	background-color: black;
 }
 
 h1, h2, h3 {
@@ -58,16 +59,7 @@ h4 {
     height: 85px;
     top: 5px;
     left: 90px;
-	/*-webkit-animation:linear infinite alternate;
-    -webkit-animation-name: run;
-    -webkit-animation-duration: 10s;*/
 }
-
-/*@-webkit-keyframes run {
-    0% { left: 0;}
-    50%{ left : 50%;}
-    100%{ left: 0;}
-}*/
 
 .blackhole {
 	width: 500px;
@@ -84,6 +76,83 @@ h4 {
 	to {
 		-webkit-transform: rotate(359deg);
 	}
+}
+
+@-webkit-keyframes mymove {
+  from {height: 100px;}
+  to {height: 0px;}
+}
+
+@-webkit-keyframes win {
+  from {right: 30px;}
+  to {right: 400px;}
+}
+
+@-webkit-keyframes win2 {
+  from {top: 20px;}
+  to {top: 170px;}
+}
+
+#gameover {
+	display: none;
+	margin: 0;
+	padding: 0;
+	background-color: black;
+}
+
+#blackhole-gameover {
+    position: fixed;
+    width: 100%;
+    top: -300px;
+    -webkit-animation: rotation 20s infinite linear
+}
+
+#spaceman-gameover {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    height: 100px;
+    left: 575px;
+    top: 300px;
+    -webkit-animation: rotation 40s, mymove 40s infinite;
+}
+
+#youwin {
+	display: none;
+}
+
+#spacemanwin {
+    z-index: 1;
+    position: absolute;
+    height: 100px;
+    right: 30px;
+    top: 20px;
+    -webkit-animation: win 20s, win2 20s, mymove 20s infinite;
+}
+
+/*#gameplay {
+	display: none;
+}*/
+
+#earthwin {
+	width: 100%;
+	object-fit: cover;
+}
+
+.img-wrapper {
+	position: relative;
+}
+
+.img-overlay {
+	position: absolute;
+	width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+}
+
+#playagain {
+	border-radius: 0;
 }
 
 /* main section */
